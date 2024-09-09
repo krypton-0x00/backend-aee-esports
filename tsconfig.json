@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // The target JS version
+    "module": "ESNext", // The module system
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Enables compatibility with CommonJS
+    "skipLibCheck": true, // Skip type-checking all declaration files
+    "moduleResolution": "node", // Resolve modules using Node.js resolution
+    "outDir": "./dist", // The directory where the compiled files go
+    "rootDir": "./src" // The root directory of your source files
+  },
+  "include": ["src"], // Include the 'src' directory
+  "exclude": ["node_modules"] // Exclude dependencies
+}
