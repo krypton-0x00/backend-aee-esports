@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.router";
+import reviewsRouter from "./routes/reviews.router";
 dotenv.config();
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(cookieParser());
 
 app.use("/api/auth/", authRouter);
+app.use("/api/reviews/", reviewsRouter);
 
 app.get("/health-check", (req, res) => {
   res.send("it works");

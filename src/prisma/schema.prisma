@@ -15,4 +15,3 @@ model User {
   isVerified Boolean? @default(false)
 }
 
- 
