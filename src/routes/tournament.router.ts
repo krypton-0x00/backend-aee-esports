@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createTournament } from "../controllers/tournament/createTournament";
-import getTournaments from "../controllers/tournament/getTournaments";
+import { createTournament } from "../controllers/tournament/createTournament.js";
+import getTournaments from "../controllers/tournament/getTournaments.js";
 
 const tournamentRouter = Router();
 

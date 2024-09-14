@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import authRouter from "./routes/auth.router";
-import reviewsRouter from "./routes/reviews.router";
-import tournamentRouter from "./routes/tournament.router";
+import authRouter from "./routes/auth.router.js";
+import reviewsRouter from "./routes/reviews.router.js";
+import tournamentRouter from "./routes/tournament.router.js";
 
 export default function app() {
   dotenv.config();

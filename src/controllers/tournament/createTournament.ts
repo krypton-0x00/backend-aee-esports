@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { createTournamentBody } from "../../types/tournament.types";
-import prisma from "../../prisma/prismaClient";
-import { createTournamentSchema } from "../../schema/createTournamentSchema";
+import { createTournamentBody } from "../../types/tournament.types.js";
+import prisma from "../../prisma/prismaClient.js";
+import { createTournamentSchema } from "../../schema/createTournamentSchema.js";
 
 export const createTournament = async (req: Request, res: Response) => {
   try {

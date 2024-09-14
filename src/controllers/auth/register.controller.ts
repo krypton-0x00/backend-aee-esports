@@ -1,9 +1,8 @@
 import type { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-import generateJWT from "../../utils/generateJWT";
+import generateJWT from "../../utils/generateJWT.js";
 import bcrypt from "bcryptjs";
 
-import prisma from "../../prisma/prismaClient";
+import prisma from "../../prisma/prismaClient.js";
 
 export default async function register(req: Request, res: Response) {
   try {

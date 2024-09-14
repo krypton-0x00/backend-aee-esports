@@ -1,8 +1,7 @@
 import type { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import generateJWT from "../../utils/generateJWT";
-import prisma from "../../prisma/prismaClient";
+import generateJWT from "../../utils/generateJWT.js";
+import prisma from "../../prisma/prismaClient.js";
 
 export default async function login(req: Request, res: Response) {
   try {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "../../prisma/prismaClient";
+import prisma from "../../prisma/prismaClient.js";
 
 export default async function getTournaments(req: Request, res: Response) {
   try {
