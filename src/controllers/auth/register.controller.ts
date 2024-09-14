@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import generateJWT from "../../utils/generateJWT";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
+import prisma from "../../prisma/prismaClient";
 
 export default async function register(req: Request, res: Response) {
   try {

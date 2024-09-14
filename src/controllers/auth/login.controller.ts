@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import generateJWT from "../../utils/generateJWT";
-const prisma = new PrismaClient();
+import prisma from "../../prisma/prismaClient";
 
 export default async function login(req: Request, res: Response) {
   try {

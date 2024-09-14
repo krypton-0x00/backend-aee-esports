@@ -9,9 +9,44 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   email String @unique
   password String
   isVerified Boolean? @default(false)
+  tournamentCount Int @default(0)
+  subscription UserType @default(FREE)
+  tournaments Tournament[]
+}
+model Tournament {
+  id String @id @default(uuid())
+  name String
+  logo String
+  orgName String
+  game Game 
+  slots Int
+  unit Int
+  status TournamentStatus
+  visibility Visibility
+  userId String
+  createdBy User @relation(fields: [userId],references: [id])
 }
 
+
+enum UserType {
+  FREE
+  PREMIUM
+}
+
+enum Game {
+  BGMI
+  VALORANT
+}
+enum TournamentStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+}
+enum Visibility {
+  PUBLIC
+  HIDDEN
+}
