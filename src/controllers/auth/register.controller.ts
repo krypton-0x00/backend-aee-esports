@@ -6,17 +6,17 @@ import bcrypt from "bcryptjs";
 
 import prisma from "../../prisma/prismaClient.js";
 
-const registerSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, "Password should be at least 8 characters long"),
-  confirmPassword: z
-    .string()
-    .min(8, "Password should be at least 8 characters long"),
-});
+// const registerSchema = z.object({
+//   email: z.string().email(),
+//   password: z.string().min(8, "Password should be at least 8 characters long"),
+//   confirmPassword: z
+//     .string()
+//     .min(8, "Password should be at least 8 characters long"),
+// });
 
 export default async function register(req: Request, res: Response) {
   try {
-    const { email, password, confirmPassword } = registerSchema.parse(req.body);
+    const { email, password, confirmPassword } = req.body;
     // const { email, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {

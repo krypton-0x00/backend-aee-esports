@@ -4,14 +4,14 @@ import bcrypt from "bcryptjs";
 import generateJWT from "../../utils/generateJWT.js";
 import prisma from "../../prisma/prismaClient.js";
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, "Password should be at least 8 characters long"),
-});
+// const loginSchema = z.object({
+//   email: z.string().email(),
+//   password: z.string().min(8, "Password should be at least 8 characters long"),
+// });
 
 export default async function login(req: Request, res: Response) {
   try {
-    const { email, password } = loginSchema.parse(req.body);
+    const { email, password } = req.body;
 
     const user = await prisma.user.findFirst({
       where: {
