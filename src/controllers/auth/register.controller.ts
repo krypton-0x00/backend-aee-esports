@@ -1,19 +1,23 @@
+import { z } from "zod";
+
 import type { Request, Response } from "express";
 import generateJWT from "../../utils/generateJWT.js";
 import bcrypt from "bcryptjs";
 
 import prisma from "../../prisma/prismaClient.js";
 
+const registerSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8, "Password should be at least 8 characters long"),
+  confirmPassword: z
+    .string()
+    .min(8, "Password should be at least 8 characters long"),
+});
+
 export default async function register(req: Request, res: Response) {
   try {
-    const { email, password, confirmPassword } = req.body;
-
-    if (!email || !password || !confirmPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required.",
-      });
-    }
+    const { email, password, confirmPassword } = registerSchema.parse(req.body);
+    // const { email, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({
