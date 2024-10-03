@@ -9,3 +9,11 @@ export interface createTournamentBody {
   visibility: "PUBLIC" | "HIDDEN";
   userId: string;
 }
+export interface RegisterBody {
+ 
+    email:string,
+    password:string,
+    confirmPassword:string
+
+  
+}

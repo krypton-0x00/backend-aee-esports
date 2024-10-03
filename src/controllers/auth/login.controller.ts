@@ -1,13 +1,13 @@
 import { z } from "zod";
 import type { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import generateJWT from "../../utils/generateJWT.js";
 import prisma from "../../prisma/prismaClient.js";
+import Tokens from "../../utils/cookie.util.js";
 
-// const loginSchema = z.object({
-//   email: z.string().email(),
-//   password: z.string().min(8, "Password should be at least 8 characters long"),
-// });
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8, "Password should be at least 8 characters long"),
+});
 
 export default async function login(req: Request, res: Response) {
   try {
@@ -41,13 +41,10 @@ export default async function login(req: Request, res: Response) {
       email: user.email,
     };
 
-    const token = generateJWT(user.email);
+    const token = Tokens.generateJWT(email,7);
+    Tokens.setCookie(res,token,7);
+
     res
-      .cookie("jwt", token, {
-        maxAge: 1000 * 60 * 60 * 24 * 30,
-        httpOnly: true,
-        sameSite: true,
-      })
       .status(200)
       .json({
         success: true,

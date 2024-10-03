@@ -13,9 +13,20 @@ model User {
   email String @unique
   password String
   isVerified Boolean? @default(false)
-  tournamentCount Int @default(0)
-  subscription UserType @default(FREE)
+  subscription UserType @default(NORMALUSER)
+  profile UserGamingProfile? 
   tournaments Tournament[]
+}
+model UserGamingProfile {
+  id String @id @default(uuid())
+  email String @unique
+  tournamentCount Int @default(0)
+  teamId String
+  slots SlotList[]
+  perviousTournaments Tournament[] //stores the history of the previous tournaments
+  userId String @unique
+  team Team @relation(fields: [teamId],references: [id])
+  profile  User @relation(fields: [userId], references: [id])
 }
 model Tournament {
   id String @id @default(uuid())
@@ -28,11 +39,42 @@ model Tournament {
   status TournamentStatus
   visibility Visibility
   userId String
+  slotList SlotList[]
+  teams Team[]
+  gamingProfiles UserGamingProfile[] //stores the history of the enrolled players
   createdBy User @relation(fields: [userId],references: [id])
 }
 
+model SlotList{
+  id String @id @default(uuid())
+  number Int
+  maxPlayers Int
+  gameType Game
+  tournamentId String
+  tournament Tournament @relation(fields: [tournamentId],references: [id])
+  ownerId String  
+  owner UserGamingProfile @relation(fields: [ownerId], references: [id])
+  team Team?
+
+}
+model Team {
+  id String @id @default(uuid())
+  name String
+  logo String
+  tournamentId String
+  tournament  Tournament @relation(fields: [tournamentId], references: [id])
+  slotId String @unique
+  slot SlotList @relation(fields: [slotId], references: [id])
+  players UserGamingProfile[]
+}
+
+
+
+
+
 
 enum UserType {
+  NORMALUSER
   FREE
   PREMIUM
 }
@@ -50,3 +92,4 @@ enum Visibility {
   PUBLIC
   HIDDEN
 }
+ 

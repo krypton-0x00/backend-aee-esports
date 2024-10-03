@@ -7,17 +7,29 @@ import reviewsRouter from "./routes/reviews.router.js";
 import tournamentRouter from "./routes/tournament.router.js";
 
 export default function app(): Application {
-  dotenv.config();
+  dotenv.config({
+    path: "../.env"
+  });
 
   const app: Application = express();
   //middlewares
   app.use(express.json());
-  app.use(cors());
+  app.use(cors(
+    {
+      origin: "http://localhost:3000",
+      credentials:true
+    }
+  ));
   app.use(cookieParser());
+  app.use(express.urlencoded({ extended: true }));
+
 
   app.use("/api/auth/", authRouter);
   app.use("/api/reviews/", reviewsRouter);
   app.use("/api/tournament", tournamentRouter);
+
+ 
+
 
   app.get("/health-check", (req: Request, res: Response) => {
     res.send("it works");

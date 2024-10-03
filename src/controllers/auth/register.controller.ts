@@ -1,23 +1,19 @@
-import { z } from "zod";
-
-import type { Request, Response } from "express";
-import generateJWT from "../../utils/generateJWT.js";
+import type {  Response } from "express";
 import bcrypt from "bcryptjs";
-
 import prisma from "../../prisma/prismaClient.js";
+import { RegisterBody } from "../../types/tournament.types.js";
+import { registerSchema } from "../../schema/registerUserSchema.js";
+import Tokens from "../../utils/cookie.util.js";
 
-// const registerSchema = z.object({
-//   email: z.string().email(),
-//   password: z.string().min(8, "Password should be at least 8 characters long"),
-//   confirmPassword: z
-//     .string()
-//     .min(8, "Password should be at least 8 characters long"),
-// });
 
-export default async function register(req: Request, res: Response) {
+
+export default async function register(req: {body:RegisterBody}, res: Response) {
   try {
-    const { email, password, confirmPassword } = req.body;
-    // const { email, password, confirmPassword } = req.body;
+    registerSchema.safeParse(req.body);
+    const { email,  password, confirmPassword } = req.body;
+    
+   
+     
 
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -25,6 +21,7 @@ export default async function register(req: Request, res: Response) {
         message: "Passwords Dont Match.",
       });
     }
+   
 
     const user = await prisma.user.findFirst({
       where: {
@@ -32,32 +29,44 @@ export default async function register(req: Request, res: Response) {
       },
     });
 
+   
+
+
     if (user) {
       return res.status(400).json({
         success: false,
         message: "User Already Exists",
       });
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const token = generateJWT(email);
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-      },
-    });
-    const payload = {
-      id: newUser.id,
-      email: newUser.email,
-    };
-
-    res
-      .cookie("jwt", token, {
-        maxAge: 1000 * 60 * 60 * 24 * 30,
-        httpOnly: true,
-        sameSite: true,
+    let payload = {}
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await prisma.user.create({
+          data: {
+            email,
+            password: hashedPassword,
+          },
+        });
+        payload = {
+          id: newUser.id,
+          email: newUser.email,
+        };
+      
+    } catch (error) {
+      console.log("[!] Error occured while hasing password",error);
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
       })
+    }
+    
+    
+
+    const token = Tokens.generateJWT(email,7);
+    Tokens.setCookie(res,token,7);
+    
+
+     return res
       .status(201)
       .json({
         success: true,

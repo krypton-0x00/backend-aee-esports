@@ -1,11 +1,9 @@
 import type { Request, Response } from "express";
+import Tokens from "../../utils/cookie.util";
 
 export default function logout(req: Request, res: Response) {
+  Tokens.removeCookie(res);
   res
-    .cookie("jwt", "", {
-      maxAge: 0,
-      httpOnly: true,
-    })
     .status(200)
     .json({
       success: true,
