@@ -21,7 +21,7 @@ export default function app(): Application {
     // CORS-> (PRODUCTION)
     if (isProduction) {
       const origin = req.header('Origin');
-      if (whitelist.indexOf(origin||'') !== -1 || !origin) {
+      if (whitelist.indexOf(origin || '') !== -1 || !origin) {
         callback(null, { origin: true });
       } else { 
         callback(new Error('Not allowed by CORS'));

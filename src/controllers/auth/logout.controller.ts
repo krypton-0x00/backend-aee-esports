@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import Tokens from "../../utils/cookie.util";
+import Tokens from "../../utils/cookie.util.js";
 
 export default function logout(req: Request, res: Response) {
   Tokens.removeCookie(res);
