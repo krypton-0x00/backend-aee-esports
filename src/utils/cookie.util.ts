@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import prisma from "../prisma/prismaClient";
+import prisma from "../prisma/prismaClient.js";
 
 
 interface CustomRequest extends Request {
