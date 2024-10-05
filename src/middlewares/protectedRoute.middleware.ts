@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import Tokens from "../utils/cookie.util";
+import Tokens from "../utils/cookie.util.js";
 
 export default  async function protectedRoute(req:Request,res:Response,next:NextFunction){
 
