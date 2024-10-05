@@ -3,7 +3,7 @@ import prisma from "../../prisma/prismaClient.js";
 
 export default async function getTournaments(req: Request, res: Response) {
   try {
-    console.log(1);
+     
     const tournaments = await prisma.tournament.findMany({
       where: {
         visibility: "PUBLIC",
@@ -17,9 +17,7 @@ export default async function getTournaments(req: Request, res: Response) {
         message: "No tournaments found",
       });
     } else {
-      return res.status(200).json({
-        success: true,
-        data: tournaments,
+      return res.status(200).json({tournaments
       });
     }
   } catch (error) {

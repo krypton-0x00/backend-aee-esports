@@ -1,4 +1,4 @@
-import z from "zod";
+import z, { date } from "zod";
 
 export const createTournamentSchema = z.object({
   name: z
@@ -17,4 +17,6 @@ export const createTournamentSchema = z.object({
   status: z.enum(["UPCOMING", "ONGOING", "COMPLETED"]),
   visibility: z.enum(["PUBLIC", "HIDDEN"]),
   userId: z.string(),
+  startDate: z.string().date(),
+  endDate: z.string().date()
 });

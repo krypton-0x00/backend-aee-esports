@@ -1,0 +1,1 @@
+export const whitelist:string[] = ["https://backend-aee-esports.onrender.com"]

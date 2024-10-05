@@ -9,7 +9,7 @@ export const createTournament = async (req: Request, res: Response) => {
     if (error) {
       return res.status(400).json({
         success: false,
-        message: error.message,
+        message: "Invalid input.",
       });
     }
     const {
@@ -22,6 +22,8 @@ export const createTournament = async (req: Request, res: Response) => {
       status,
       visibility,
       userId,
+      startDate,
+      endDate
     }: createTournamentBody = req.body;
     if (
       !name ||
@@ -32,7 +34,9 @@ export const createTournament = async (req: Request, res: Response) => {
       !unit ||
       !status ||
       !visibility ||
-      !userId
+      !userId ||
+      !startDate ||
+      !endDate
     ) {
       return res.status(400).json({
         success: false,
@@ -56,22 +60,28 @@ export const createTournament = async (req: Request, res: Response) => {
     ) {
       return res.status(401).json({
         success: false,
-        message: "Please upgrade your account to create more tournaments",
+        message: "Please upgrade your account to create more tournaments.",
       });
     }
+
+    const StartDate = new Date(req.body.startDate);
+    const EndDate = new Date(req.body.endDate);
+
     const [newTournament, updatedUser] = await prisma.$transaction([
       prisma.tournament.create({
-        data: {
-          name,
-          logo,
-          orgName,
-          game,
-          slots,
-          unit,
-          status,
-          visibility,
-          userId,
-        },
+       data: {
+         name,
+         logo,
+         orgName,
+         game,
+         slots,
+         unit,
+         status,
+         visibility,
+         userId,
+         startDate:StartDate,
+         endDate:EndDate
+       },
       }),
       prisma.user.update({
         where: {

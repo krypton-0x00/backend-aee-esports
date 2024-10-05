@@ -1,9 +1,10 @@
 import type {  Response } from "express";
 import bcrypt from "bcryptjs";
 import prisma from "../../prisma/prismaClient.js";
-import { RegisterBody } from "../../types/tournament.types.js";
+ 
 import { registerSchema } from "../../schema/registerUserSchema.js";
 import Tokens from "../../utils/cookie.util.js";
+import { RegisterBody } from "../../types/register.types.js";
 
 
 

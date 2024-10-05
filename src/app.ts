@@ -5,21 +5,34 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.router.js";
 import reviewsRouter from "./routes/reviews.router.js";
 import tournamentRouter from "./routes/tournament.router.js";
+import { whitelist } from "./config/cors.whitelist.js";
 
 export default function app(): Application {
-  dotenv.config({
-    path: "../.env"
-  });
+  dotenv.config();
 
   const app: Application = express();
   //middlewares
   app.use(express.json());
-  app.use(cors(
-    {
-      origin:"*",
-      credentials:true
+  
+
+  const corsOptions = (req:Request, callback: (err: Error | null, options?: { origin: boolean }) => void) => {
+    const isProduction = process.env.DEPLOY !== 'DEV';
+  
+    // CORS-> (PRODUCTION)
+    if (isProduction) {
+      const origin = req.header('Origin');
+      if (whitelist.indexOf(origin||'') !== -1 || !origin) {
+        callback(null, { origin: true });
+      } else { 
+        callback(new Error('Not allowed by CORS'));
+      }
+    } else {
+      // Allow postman In Dev
+      callback(null, { origin: true });
     }
-  ));
+  };
+   
+  app.use(cors(corsOptions));
   app.use(cookieParser());
   app.use(express.urlencoded({ extended: true }));
 

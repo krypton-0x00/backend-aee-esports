@@ -14,13 +14,13 @@ model User {
   password String
   isVerified Boolean? @default(false)
   subscription UserType @default(NORMALUSER)
+  tournamentCount Int @default(0)
   profile UserGamingProfile? 
   tournaments Tournament[]
 }
 model UserGamingProfile {
   id String @id @default(uuid())
   email String @unique
-  tournamentCount Int @default(0)
   teamId String
   slots SlotList[]
   perviousTournaments Tournament[] //stores the history of the previous tournaments
@@ -41,6 +41,8 @@ model Tournament {
   userId String
   slotList SlotList[]
   teams Team[]
+  startDate DateTime
+  endDate DateTime
   gamingProfiles UserGamingProfile[] //stores the history of the enrolled players
   createdBy User @relation(fields: [userId],references: [id])
 }

@@ -60,16 +60,15 @@ export default class Tokens {
       maxAge: this.maxAge,
       httpOnly: true,
       sameSite: "lax",
-      // secure: process.env.NODE_ENV !== "development",
+      secure: process.env.NODE_ENV !== "development",
     });
   }
 
 
   static removeCookie(res:Response,cookieName="jwt"){
-    res
-    .cookie(cookieName, "", {
-      maxAge: 0,
-      httpOnly: true,
+    res.clearCookie("jwt").json({
+      success: true,
+      message: "Logout Successful",
     })
   }
 }
