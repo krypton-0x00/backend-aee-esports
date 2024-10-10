@@ -4,6 +4,6 @@ import protectedRoute from "../middlewares/protectedRoute.middleware.js";
 
 const reviewsRouter = Router();
 
-reviewsRouter.get("/get-reviews", protectedRoute, getReviews);
+reviewsRouter.get("/get-reviews", getReviews);
 
 export default reviewsRouter;

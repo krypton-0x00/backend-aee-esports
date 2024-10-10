@@ -9,8 +9,12 @@ export default async function getTournaments(req: Request, res: Response) {
         visibility: "PUBLIC",
         status: "UPCOMING",
       },
+      include:{
+        prizePoolDisturbution : true
+      }
     });
-
+     
+    
     if (!tournaments) {
       return res.status(404).json({
         success: false,

@@ -21,6 +21,8 @@ export const createTournament = async (req: Request, res: Response) => {
       unit,
       status,
       visibility,
+      prizePool,
+      registrationFee,
       userId,
       startDate,
       endDate
@@ -69,15 +71,19 @@ export const createTournament = async (req: Request, res: Response) => {
 
     const [newTournament, updatedUser] = await prisma.$transaction([
       prisma.tournament.create({
+        
        data: {
          name,
          logo,
          orgName,
          game,
          slots,
+         slotsLeft:slots,
          unit,
          status,
          visibility,
+         prizePool,
+         registrationFee,
          userId,
          startDate:StartDate,
          endDate:EndDate

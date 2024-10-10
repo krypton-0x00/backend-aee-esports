@@ -16,6 +16,8 @@ export const createTournamentSchema = z.object({
   unit: z.number().min(4).max(5),
   status: z.enum(["UPCOMING", "ONGOING", "COMPLETED"]),
   visibility: z.enum(["PUBLIC", "HIDDEN"]),
+  prizePool: z.number(),
+  registrationFee:z.number(),
   userId: z.string(),
   startDate: z.string().date(),
   endDate: z.string().date()

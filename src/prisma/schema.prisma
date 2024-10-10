@@ -28,16 +28,22 @@ model UserGamingProfile {
   team Team @relation(fields: [teamId],references: [id])
   profile  User @relation(fields: [userId], references: [id])
 }
+
 model Tournament {
   id String @id @default(uuid())
   name String
   logo String
   orgName String
   game Game 
+
   slots Int
   unit Int
+  slotsLeft Int
   status TournamentStatus
   visibility Visibility
+  prizePool Int @default(0)
+  registrationFee Int @default(0)
+  prizePoolDisturbution PrizeDisturbution?
   userId String
   slotList SlotList[]
   teams Team[]
@@ -68,6 +74,17 @@ model Team {
   slotId String @unique
   slot SlotList @relation(fields: [slotId], references: [id])
   players UserGamingProfile[]
+}
+model PrizeDisturbution {
+  id String @id @default(uuid())
+  tournament Tournament @relation(fields: [tournamentId],references: [id])
+  tournamentId  String @unique
+  ist Int
+  second Int
+  third Int
+  forth Int?
+  mvp Int
+  pwmk Int?
 }
 
 

@@ -1,1 +1,1 @@
-export const whitelist:string[] = ["https://backend-aee-esports.onrender.com"]
+export const whitelist:string[] = ["https://backend-aee-esports.onrender.com","http://localhost:3000"]
