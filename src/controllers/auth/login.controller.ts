@@ -17,6 +17,7 @@ export default async function login(req: Request, res: Response) {
       where: {
         email,
       },
+      
     });
     if (!user) {
       return res.status(400).json({

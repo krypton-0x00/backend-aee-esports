@@ -10,9 +10,15 @@ datasource db {
 
 model User {
   id String @id @default(uuid())
+  name String
   email String @unique
   password String
   isVerified Boolean? @default(false)
+  lastLogin DateTime @default(now())
+  resetPasswordToken String? @unique
+  resetPasswordExpiresAt DateTime?
+  verifactionToken String?
+  verificationExpiresAt DateTime?
   subscription UserType @default(NORMALUSER)
   tournamentCount Int @default(0)
   profile UserGamingProfile? 
