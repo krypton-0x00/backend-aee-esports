@@ -12,7 +12,8 @@ export default async function register(
   res: Response
 ) {
   try {
-    registerSchema.safeParse(req.body);
+    const isValid = registerSchema.safeParse(req.body);
+    if (isValid.error) return;
     const { name, email, password, confirmPassword } = req.body;
 
     if (!name || !email || !password || !confirmPassword) {

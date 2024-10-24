@@ -7,6 +7,8 @@ export const createTournament = async (req: Request, res: Response) => {
   try {
     const { error } = createTournamentSchema.safeParse(req.body);
     if (error) {
+    console.log(error)
+
       return res.status(400).json({
         success: false,
         message: "Invalid input.",
@@ -14,7 +16,7 @@ export const createTournament = async (req: Request, res: Response) => {
     }
     const {
       name,
-      logo,
+      // logo,
       orgName,
       game,
       slots,
@@ -29,7 +31,6 @@ export const createTournament = async (req: Request, res: Response) => {
     }: createTournamentBody = req.body;
     if (
       !name ||
-      !logo ||
       !orgName ||
       !game ||
       !slots ||
@@ -74,7 +75,7 @@ export const createTournament = async (req: Request, res: Response) => {
         
        data: {
          name,
-         logo,
+         logo : "/pubg.png",
          orgName,
          game,
          slots,
